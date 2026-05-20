@@ -91,6 +91,7 @@ int main()
                         break; // 没有更多连接
                     }
 
+                    // 设置fd非堵塞
                     set_nonblocking(connfd);
 
                     epoll_event cev{};
@@ -123,7 +124,7 @@ int main()
                         break;
                     } else {
                        if (errno == EAGAIN || errno == EWOULDBLOCK) {
-                            break;  // 数据读完
+                            break;  // 数据已经读完，稍后再读
                         }
                         perror("read");
                         close(fd);
